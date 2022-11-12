@@ -10,6 +10,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 
 
+def test(request):
+    return render(request, 'test.html')
+
 def is_valid_email(email):
     from django.core.validators import validate_email
     from django.core.exceptions import ValidationError
