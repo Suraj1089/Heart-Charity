@@ -47,9 +47,19 @@
                     <a class="nav-link click-scroll" href="#section_6">Contact</a>
                 </li>
 
+                
+                {% if user.is_authenticated %}
+                    
                 <li class="nav-item ms-3">
-                    <a class="nav-link custom-btn custom-border-btn btn" href="{% url 'donate' %}" onclick="">Login</a>
+                    <a class="nav-link custom-btn custom-border-btn btn" href="{% url 'logout' %}" onclick="">Logout</a>
                 </li>
+                {% else %}
+                <li class="nav-item ms-3">
+                    <a class="nav-link custom-btn custom-border-btn btn" href="{% url 'login' %}" onclick="">Login</a>
+                </li>
+                {% endif %}
+
+                    
                 <!-- <li class="nav-item ms-4">
                     <a class="nav-link custom-btn custom-border-btn btn" href="{% url 'donate' %}">Login/SignUp</a>
                 </li> -->
