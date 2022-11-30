@@ -17,28 +17,30 @@
     <link href="{% static './css/bootstrap-icons.css' %}" rel="stylesheet">
 
     <link href="{% static './css/templatemo-kind-heart-charity.css' %}" rel="stylesheet">
-    <!--
 
-TemplateMo 581 Kind Heart Charity
-
-https://templatemo.com/tm-581-kind-heart-charity
-
--->
 
 </head>
 
-<!-- {% include 'navbar.html' %} -->
+
 
 {% block content %}
 
 {% endblock %}
 
-<!-- {% include 'footer.html' %} -->
 
 <script src="{% static './js/jquery.min.js' %}"></script>
 <script src="{% static './js/bootstrap.min.js' %}"></script>
 <script src="{% static './js/jquery.sticky.js' %}"></script>
 <script src="{% static './js/counter.js' %}"></script>
 <script src="{% static './js/custom.js' %}"></script>
+<script>
+    // auto close alert after 3 seconds
+    window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove(); 
+        });
+    }, 3000);
+
+</script>
 
 </html>

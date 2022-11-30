@@ -1,103 +1,42 @@
+{% extends 'base.html' %}
 {% load static %}
 
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static './css/bootstrap.min.css' %}" rel="stylesheet">
+{% block content %}
+    <!--display messages with boostrap alert-->
+{% include 'includes/messages.html' %}
 
-    <link href="{% static './css/bootstrap-icons.css' %}" rel="stylesheet">
-
-    <link href="{% static './css/templatemo-kind-heart-charity.css' %}" rel="stylesheet">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
-        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-
-    <title>Heart-Charity-Register</title>
-</head>
-
-<body>
-
-    <style>
-        .alert {
-            position: fixed;
-            left: 50%;
-            top: 120px;
-            transform: translate(-50%, -50%);
-
-
-            z-index: 99999;
-        }
-    </style>
-
-    {% for message in messages %}
-    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        {{ message | safe }}
-    </div>
-    {% endfor %}
-    <!--display messages with bootstrap alert-->
-    <!--display messages-->
-
-    <!--simple user registration form with center align-->
-    <div style="align-items:center; margin-top: 150px;" class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">User Login</h3>
-                    </div>
-                    <div class="card-body">
-                        <form action="{% url 'login' %}" method="POST">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" name="username" id="username" class="form-control">
-                            </div>
-                            <div class="form-group
+<!--simple user registration form with center align-->
+<div style="align-items:center; margin-top: 150px;" class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">User Login</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" id="username" class="form-control">
+                        </div>
+                        <div class="form-group
                                 ">
-                                <label for="password">Password</label>
-                                <input type="password" name="password" id="password" class="form-control">
-                            </div>
-                            Don't have an account? <a href="{% url 'register' %}" style="color: blue">Register</a>
-                            <div class="form-group
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" class="form-control">
+                        </div>
+                        Don't have an account? <a href="{% url 'register' %}" style="color: blue">Register</a>
+                        <div class="form-group
                                 ">
-                                <button style="margin-top: 5px" type="submit" class="btn btn-primary">Login</button>
-                            </div>
-                        </form>
-                    </div>
+                            <button style="margin-top: 5px" type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="{% static './js/jquery.min.js' %}"></script>
-    <script src="{% static './js/bootstrap.min.js' %}"></script>
-    <script src="{% static './js/jquery.sticky.js' %}"></script>
-    <script src="{% static './js/counter.js' %}"></script>
-    <script src="{% static './js/custom.js' %}"></script>
-
-    <script>
-        $(document).ready(function () {
-            window.setTimeout(function () {
-                $(".alert").fadeTo(500, 0).slideUp(500, function () {
-                    $(this).remove();
-                });
-            }, 5000);
-        });
-    </script>
-
-
-
-
-
-</body>
-
-</html>
+</div>
+{% endblock content %}
+    

@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'base',
     'user_authentication',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -140,3 +140,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # email backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+
+# setup messages tags
+
+import os
+from django.contrib.messages import constants as messages
+
+
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }
