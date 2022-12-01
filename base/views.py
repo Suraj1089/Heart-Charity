@@ -1,17 +1,19 @@
 from django.shortcuts import render
 from .models import ContactHeartCharity
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 from django.contrib import messages
-from django.core.mail import BadHeaderError
-from django.http import HttpResponse, HttpResponseRedirect
-
-# from django.core.validators import validate_email
-
+from django.conf import settings
+import requests
 # Create your views here.
+
+GOOGLE_RECAPTCHA_SECRET_KEY = settings.GOOGLE_RECAPTCHA_SECRET_KEY
+GOOGLE_RECAPTCHA_SITE_KEY = settings.GOOGLE_RECAPTCHA_SITE_KEY
 
 
 def test(request):
-    return render(request, 'test.html')
+
+    return render(request, 'test.html', {'recaptcha_site_key': GOOGLE_RECAPTCHA_SITE_KEY})
+
 
 def is_valid_email(email):
     from django.core.validators import validate_email
@@ -24,19 +26,7 @@ def is_valid_email(email):
 
 
 def home(request):
-    return render(request, 'index.html')
-
-
-def donate(request):
-    return render(request, 'donate.html')
-
-
-def news(request):
-    return render(request, 'news.html')
-
-
-def news_detail(request):
-    return render(request, 'news-detail.html')
+    return render(request, 'index.html', {'recaptcha_site_key': GOOGLE_RECAPTCHA_SITE_KEY})
 
 
 def contact(request):
@@ -51,17 +41,36 @@ def contact(request):
             contactHeartCharity = ContactHeartCharity(
                 first_name=first_name, last_name=last_name, email=email, message=message)
             contactHeartCharity.save()
-            send_mail(
-                'Heart Charity Contact Form',
-                'Thank you for contacting Heart Charity. We will get back to you as soon as possible.',
-                email,
-                ['surajpisal113@gmail.com'],
-                fail_silently=False,
-            )
-            messages.success(
-                request, 'Your message has been sent. Thank you for contacting us.')
-            return HttpResponseRedirect('/contact/')
-        if not is_valid_email(email):
-            messages.error(request, 'Please enter a valid email address.')
+
+            recapcha_response = request.POST['g-recaptcha-response']
+            data = {
+                'secret': GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recapcha_response
+            }
+            print(data)
+            r = requests.post(
+                'https://www.google.com/recaptcha/api/siteverify', data=data)
+            result = r.json()
+            print(result)
+            if result['success']:
+                # send email
+                try:
+                    send_mail(
+                        'Heart Charity Contact Form',
+                        'Message from ' + first_name + ' ' + last_name + ' ' + message,
+                        email, ['surajpisal113@gmail.com', ]
+                    )
+                    messages.add_message(
+                        request, messages.SUCCESS, 'Your message has been sent successfully')
+                except BadHeaderError:
+                    messages.add_message(
+                        request, messages.ERROR, 'Invalid header found')
+                    return render(request, 'index.html')
+            else:
+                messages.add_message(
+                    request, messages.ERROR, 'Invalid reCAPTCHA. Please try again.')
+        else:
+            messages.add_message(request, messages.ERROR,
+                                 'Invalid email address')
 
     return render(request, 'index.html')
