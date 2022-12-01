@@ -1,26 +1,68 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
-    
-    <!--render user dashboard-->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">User Dashboard</h3>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="text-center">Welcome {{ user.username }}</h4>
-                        <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+
+<!--render user dashboard-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">User Dashboard</h3>
+                </div>
+                <div class="card-body">
+
+                    {% if user.first_name %}
+                    <h4 class="text-center">Welcome {{ user.first_name }} {{ user.last_name }}</h4>
+                    {% else %}
+                    <h4 class="text-center">Welcome {{ user.username }}</h4>
+                    {% endif %}
+
+                    <p class="text-center">You are logged in</p>
+
+                    <!--display user details name,email,birth date,photo,address,city,state,pincode,country,contact-->
+                    <div class="row">
+                        <div class="col-md-6">
+
+
+
+                            {% if profile.image %}
+                            <p>{{ profile.image_url }}</p>
+                            <!--render photo in circular shape-->
+                            <img src="{{ profile.photo_url }}" alt="profile photo" class="rounded-circle"
+                                style="width: 200px; height: 200px; object-fit: cover;">
+
+                            {% else %}
+                            <p><strong></strong> <img src="{% static './images/logo.png' %}" alt="photo" width="200"
+                                    height="200"></p><br>
+                            {% endif %}
+
+
+
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                            <p><strong>Email:</strong> {{ user.email }}</p>
+                            <!-- <p><strong>Birth Date:</strong> {{ profile.birth_date }}</p> -->
+                            <p><strong>Address:</strong> {{ profile.address }}</p>
+                            <p><strong>City:</strong> {{ profile.city }}</p>
+                            <p><strong>State:</strong> {{ profile.state }}</p>
+                            <p><strong>Pincode:</strong> {{ profile.zip_code }}</p>
+                            <p><strong>Country:</strong> {{ profile.country }}</p>
+                            <p><strong>Contact:</strong> {{ profile.phone }}</p>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="{% url 'update_profile' %}" class="btn btn-primary">Update Profile</a>
+                        </div>
+                        <div style="margin-top: 10px" class="text-center">
+                            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                        </div>
+                        <!--update profile button-->
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
-
-{% endblock content %}
-    
+    {% endblock content %}

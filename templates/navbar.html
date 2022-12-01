@@ -1,52 +1,52 @@
 {% load static %}
 
 <header class="site-header">
-        <div class="container">
-            <div class="row">
+    <div class="container">
+        <div class="row">
 
-                <div class="col-lg-8 col-12 d-flex flex-wrap">
-                        {% include 'includes/current_time.html' %}
-                    <p class="d-flex me-4 mb-0">
-                        <i class="bi-geo-alt me-2"></i>
-                        Pune
-                    </p>
+            <div class="col-lg-8 col-12 d-flex flex-wrap">
+                {% include 'includes/current_time.html' %}
+                <p class="d-flex me-4 mb-0">
+                    <i class="bi-geo-alt me-2"></i>
+                    Pune
+                </p>
 
-                    <p class="d-flex mb-0">
-                        <i class="bi-envelope me-2"></i>
+                <p class="d-flex mb-0">
+                    <i class="bi-envelope me-2"></i>
 
-                        <a href="surajpisal113@gmail.com">
-                            surajpisal113@gmail.com
-                        </a>
-                    </p>
-                </div>
-
-                <div class="col-lg-3 col-12 ms-auto d-lg-block d-none">
-                    <ul class="social-icon">
-                        <li class="social-icon-item">
-                            <a href="#" class="social-icon-link bi-twitter"></a>
-                        </li>
-
-                        <li class="social-icon-item">
-                            <a href="#" class="social-icon-link bi-facebook"></a>
-                        </li>
-
-                        <li class="social-icon-item">
-                            <a href="#" class="social-icon-link bi-instagram"></a>
-                        </li>
-
-                        <li class="social-icon-item">
-                            <a href="#" class="social-icon-link bi-youtube"></a>
-                        </li>
-
-                        <li class="social-icon-item">
-                            <a href="#" class="social-icon-link bi-whatsapp"></a>
-                        </li>
-                    </ul>
-                </div>
-
+                    <a href="surajpisal113@gmail.com">
+                        surajpisal113@gmail.com
+                    </a>
+                </p>
             </div>
+
+            <div class="col-lg-3 col-12 ms-auto d-lg-block d-none">
+                <ul class="social-icon">
+                    <li class="social-icon-item">
+                        <a href="#" class="social-icon-link bi-twitter"></a>
+                    </li>
+
+                    <li class="social-icon-item">
+                        <a href="#" class="social-icon-link bi-facebook"></a>
+                    </li>
+
+                    <li class="social-icon-item">
+                        <a href="#" class="social-icon-link bi-instagram"></a>
+                    </li>
+
+                    <li class="social-icon-item">
+                        <a href="#" class="social-icon-link bi-youtube"></a>
+                    </li>
+
+                    <li class="social-icon-item">
+                        <a href="#" class="social-icon-link bi-whatsapp"></a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
-    </header>
+    </div>
+</header>
 <nav class="navbar navbar-expand-lg bg-light shadow-lg">
     <div class="container">
         <a class="navbar-brand" href="{% url 'home' %}">
@@ -85,11 +85,14 @@
                     <a class="nav-link click-scroll" href="#section_6">Contact</a>
                 </li>
 
-                
+
                 {% if user.is_authenticated %}
-                    
+
                 <li class="nav-item ms-3">
                     <a class="nav-link custom-btn custom-border-btn btn" href="{% url 'logout' %}" onclick="">Logout</a>
+                </li>
+                <li class="nav-item ms-3">
+                    <a class="nav-link custom-btn custom-border-btn btn" href="{% url 'dashboard' %}" onclick="">Dashboard</a>
                 </li>
                 {% else %}
                 <li class="nav-item ms-3">
@@ -97,7 +100,7 @@
                 </li>
                 {% endif %}
 
-            
+
             </ul>
         </div>
     </div>

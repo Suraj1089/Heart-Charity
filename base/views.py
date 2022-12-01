@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import ContactHeartCharity
+from .models import ContactHeartCharity, VolunteerForm
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib import messages
 from django.conf import settings
@@ -47,11 +47,11 @@ def contact(request):
                 'secret': GOOGLE_RECAPTCHA_SECRET_KEY,
                 'response': recapcha_response
             }
-            print(data)
+            # print(data)
             r = requests.post(
                 'https://www.google.com/recaptcha/api/siteverify', data=data)
             result = r.json()
-            print(result)
+            # print(result)
             if result['success']:
                 # send email
                 try:
@@ -73,4 +73,52 @@ def contact(request):
             messages.add_message(request, messages.ERROR,
                                  'Invalid email address')
 
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'recaptcha_site_key': GOOGLE_RECAPTCHA_SITE_KEY})
+
+
+def voluteer_form(request):
+    if request.method == 'POST':
+        first_name = request.POST['volunteer-name']
+        last_name = first_name.split(' ')[1]
+        email = request.POST['email']
+        subject = request.POST['subject']
+        message = request.POST['message']
+        resume = request.FILES['resume']
+        # print(first_name, last_name, email, subject, message, resume)
+
+        if is_valid_email(email):
+            volunteerForm = VolunteerForm(
+                first_name=first_name, last_name=last_name, email=email, subject=subject, message=message, resume=resume)
+            volunteerForm.save()
+
+            recapcha_response = request.POST['g-recaptcha-response']
+            data = {
+                'secret': GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recapcha_response
+            }
+            # print(data)
+            r = requests.post(
+                'https://www.google.com/recaptcha/api/siteverify', data=data)
+            result = r.json()
+            # print(result)
+            if result['success']:
+                # send email
+                try:
+                    send_mail(
+                        'Heart Charity Volunteer Form',
+                        'Message from ' + first_name + ' ' + last_name + ' ' + message,
+                        email, ['surajpisal113@gmail.com'], fail_silently=False)
+                    messages.add_message(
+                        request, messages.SUCCESS, 'Your message has been sent successfully')
+                except BadHeaderError:
+                    messages.add_message(
+                        request, messages.ERROR, 'Invalid header found')
+                    return render(request, 'index.html')
+            else:
+                messages.add_message(
+                    request, messages.ERROR, 'Invalid reCAPTCHA. Please try again.')
+        else:
+            messages.add_message(request, messages.ERROR,
+                                 'Invalid email address')
+
+    return render(request, 'index.html', {'recaptcha_site_key': GOOGLE_RECAPTCHA_SITE_KEY})

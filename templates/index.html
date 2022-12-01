@@ -14,7 +14,7 @@
                 <div class="col-lg-12 col-12 p-0">
                     <div id="hero-slide" class="carousel carousel-fade slide" data-bs-ride="carousel">
 
-                      {% include 'includes/messages.html' %}
+                        {% include 'includes/messages.html' %}
 
 
                         <div class="carousel-inner">
@@ -251,7 +251,9 @@
                 <div class="col-lg-6 col-12">
                     <h2 class="text-white mb-4">Volunteer</h2>
 
-                    <form class="custom-form volunteer-form mb-5 mb-lg-0" action="#" method="post" role="form">
+                    <form class="custom-form volunteer-form mb-5 mb-lg-0" action="{% url 'volunteer' %}" method="post"
+                        role="form" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <h3 class="mb-4">Become a volunteer today</h3>
 
                         <div class="row">
@@ -261,18 +263,19 @@
                             </div>
 
                             <div class="col-lg-6 col-12">
-                                <input type="email" name="volunteer-email" id="volunteer-email" pattern="[^ @]*@[^ @]*"
+                                <input type="email" name="email" id="volunteer-email" pattern="[^ @]*@[^ @]*"
                                     class="form-control" placeholder="Jackdoe@gmail.com" required>
                             </div>
 
                             <div class="col-lg-6 col-12">
-                                <input type="text" name="volunteer-subject" id="volunteer-subject" class="form-control"
+                                <input type="text" name="subject" id="volunteer-subject" class="form-control"
                                     placeholder="Subject" required>
                             </div>
 
                             <div class="col-lg-6 col-12">
                                 <div class="input-group input-group-file">
-                                    <input type="file" class="form-control" id="inputGroupFile02">
+                                    <input type="file" class="form-control" name="resume" id="inputGroupFile02"
+                                        required>
 
                                     <label class="input-group-text" for="inputGroupFile02">Upload your CV</label>
 
@@ -281,10 +284,14 @@
                             </div>
                         </div>
 
-                        <textarea name="volunteer-message" rows="3" class="form-control" id="volunteer-message"
-                            placeholder="Comment (Optional)"></textarea>
+                        <textarea rows="3" class="form-control" name="message" id="message"
+                            placeholder="Comment (Optional)" required></textarea>
+                        <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
 
-                        <button type="submit" class="form-control">Submit</button>
+                        <button type="submit" class="form-control"
+                            data-sitekey="{{ recaptcha_site_key }}">Submit</button>
+
+
                     </form>
                 </div>
 
@@ -308,7 +315,7 @@
         <div class="container">
             <div class="row">
 
-            
+
 
                 <div class="col-lg-5 col-12 mx-auto">
                     <form class="custom-form contact-form" action="{% url 'contact' %}" method="post" role="form">
@@ -316,7 +323,7 @@
                         <h2>Contact form</h2>
 
                         <p class="mb-4">Or, you can just send an email:
-                            <a href="#">surajpisal113@gmail.com</a>
+                            <a style="color: blue;" href="#">surajpisal113@gmail.com</a>
                         </p>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
@@ -335,8 +342,15 @@
 
                         <textarea name="message" rows="5" class="form-control" id="message"
                             placeholder="What can we help you?"></textarea>
+                        <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
 
-                        <button type="submit" class="form-control">Send Message</button>
+                        <!-- <button style="margin-top: 5px" type="submit" class="btn btn-primary">Login</button> -->
+                        <button type="submit" class="form-control" data-sitekey="{{ recaptcha_site_key }}">Send
+                            Message</button>
+
+
+
+
                     </form>
                 </div>
 
