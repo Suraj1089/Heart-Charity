@@ -78,8 +78,7 @@ python manage.py runserver
 ## Usage
 
 - You can use this website for any charity organization.
-- remove media directory from .gitignore so uploaded images can be visible.
-
+- see detials of the project in the gallery section.
 
 ## Contributing
 
