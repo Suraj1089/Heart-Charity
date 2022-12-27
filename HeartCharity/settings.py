@@ -34,14 +34,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False').lower() in ['true', '1', 't', 'y', 'yes']
-
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -89,39 +84,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'HeartCharity.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# [label django_app/settings.py]
-
-# DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.sqlite3",
-#             "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-#         }
-#     }
-
-# database setup
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
-}
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
+    }
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': dj_database_url.config(default='postgresql://postgres:postgres@localhost:5432/mysite',conn_max_age=600)
-#     }
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
