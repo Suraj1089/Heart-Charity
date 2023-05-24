@@ -86,9 +86,13 @@ WSGI_APPLICATION = 'HeartCharity.wsgi.application'
 
 
 DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv('DATABASE_URL')
+         'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('NAME'),
+            'USER': os.getenv('USER'),
+            'PASSWORD': os.getenv('PASSWORD'),
+            'HOST': os.getenv('HOST'),
+             'PORT': os.getenv('PORT')
         }
     }
 
