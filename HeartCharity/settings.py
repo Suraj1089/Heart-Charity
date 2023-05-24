@@ -85,16 +85,17 @@ WSGI_APPLICATION = 'HeartCharity.wsgi.application'
 
 
 
-DATABASES = {
-         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('NAME'),
-            'USER': os.getenv('USER'),
-            'PASSWORD': os.getenv('PASSWORD'),
-            'HOST': os.getenv('HOST'),
-             'PORT': os.getenv('PORT')
-        }
-    }
+# DATABASES = {
+# #          'default': {
+# #             'ENGINE': 'django.db.backends.postgresql',
+# #             'NAME': os.getenv('NAME'),
+# #             'USER': os.getenv('USER'),
+# #             'PASSWORD': os.getenv('PASSWORD'),
+# #             'HOST': os.getenv('HOST'),
+# #              'PORT': os.getenv('PORT')
+# #         }
+#     }
+DATABASES = {'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))}
 
 
 AUTH_PASSWORD_VALIDATORS = [
